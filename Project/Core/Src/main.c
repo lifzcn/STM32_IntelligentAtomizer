@@ -66,7 +66,8 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	uint8_t i = 0;
+	uint16_t j = 500;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -90,13 +91,97 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		if(HAL_GPIO_ReadPin(Key_1_GPIO_Port, Key_1_Pin) == GPIO_PIN_RESET)
+		{
+			HAL_Delay(50);
+			i += 1;
+		}
+		else if(HAL_GPIO_ReadPin(Key_2_GPIO_Port, Key_2_Pin) == GPIO_PIN_RESET)
+		{
+			HAL_Delay(50);
+			i += 1;
+		}
+		
+		if(i%2==1)
+		{
+			printf("智能雾化器已打开，欢迎您的使用！\n");
+			if(HAL_GPIO_ReadPin(Key_3_GPIO_Port, Key_3_Pin) == GPIO_PIN_RESET)
+			{
+				HAL_Delay(50);
+				j += 500;
+			}
+			else if(HAL_GPIO_ReadPin(Key_4_GPIO_Port, Key_4_Pin) == GPIO_PIN_RESET)
+			{
+				HAL_Delay(50);
+				j -= 500;
+			}
+		}
+		else if(i%2==0)
+		{
+			printf("智能雾化器已关闭，感谢您的使用！\n");
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+		}
+		
+		switch(j)
+		{
+			case 500:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+				printf("当前雾化器档位为：0 档！\n");
+			break;
+			case 1000:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 1000);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+				printf("当前雾化器档位为：1 档！\n");
+			break;
+			case 1500:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 1500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+				printf("当前雾化器档位为：2 档！\n");
+			break;
+			case 2000:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2000);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+				printf("当前雾化器档位为：3 档！\n");
+			break;
+			case 2500:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+				printf("当前雾化器档位为：4 档！\n");
+			break;
+			default:
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 500);
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 500);
+			break;
+		}
+		i = 0;
+		j = 500;
+		HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
