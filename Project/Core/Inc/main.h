@@ -67,6 +67,8 @@ void Error_Handler(void);
 #define Key_2_GPIO_Port GPIOA
 #define Key_1_Pin GPIO_PIN_4
 #define Key_1_GPIO_Port GPIOA
+#define Atomizer_GND_Pin GPIO_PIN_9
+#define Atomizer_GND_GPIO_Port GPIOA
 #define IN_GND_Pin GPIO_PIN_12
 #define IN_GND_GPIO_Port GPIOA
 

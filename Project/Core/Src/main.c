@@ -67,7 +67,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   uint8_t i = 0;
-  uint16_t j = 2;
+  uint16_t j = 3;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -92,9 +92,6 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -118,67 +115,38 @@ int main(void)
       if (HAL_GPIO_ReadPin(Key_3_GPIO_Port, Key_3_Pin) == GPIO_PIN_RESET)
       {
         HAL_Delay(50);
-        j += 2;
+        j += 3;
       }
       else if (HAL_GPIO_ReadPin(Key_4_GPIO_Port, Key_4_Pin) == GPIO_PIN_RESET)
       {
         HAL_Delay(50);
-        j -= 2;
+        j -= 3;
       }
     }
     else if (i % 2 == 0)
     {
       printf("Atomizer: OFF\n");
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
-      j = 2;
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 3);
+      j = 3;
     }
 
     switch (j)
     {
-    case 2:
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
+    case 3:
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 3);
       printf("Gear: 0\n");
-      break;
-    case 4:
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 4);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
-      printf("Gear: 1\n");
       break;
     case 6:
       __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 6);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
+      printf("Gear: 1\n");
+      break;
+    case 9:
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 9);
       printf("Gear: 2\n");
       break;
-    case 8:
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 8);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
-      printf("Gear: 3\n");
-      break;
-    case 10:
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 10);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
-      printf("Gear: 4\n");
-      break;
     default:
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2);
-      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 2);
-      j = 2;
+      __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 3);
+      j = 3;
       break;
     }
 
